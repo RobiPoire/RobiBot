@@ -1,0 +1,46 @@
+"""
+NashiBot - Errors
+~~~~~~~~~~~~~~~~~~~~
+Fonctions qui gère les erreurs du bot.
+"""
+
+# Importations des modules nécessaires au fonctionnement de ce module.
+import logging
+import discord
+import datetime
+from discord.ext import commands
+import yaml
+
+
+class errors(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.Cog.listener()
+    async def on_command_error(self, interaction):
+        """
+        Le gestionnaire d'erreurs.
+
+        Args:
+            ctx: Le contexte d'utilisation de la commande.
+            error: L'objet Exception qui a été déclenché.
+        """
+        if 1 == 2:
+            pass
+        else:
+            # Il envoie une erreur à l'utilisateur :
+            embed = discord.Embed(
+                description="Quelque chose de non prévu est arrivé, l'erreur a été communiqué au staff.",
+                color=0xE31C1C,
+                timestamp=datetime.datetime.utcnow(),
+            )
+            embed.set_author(
+                name="Une erreur inattendue est survenue.",
+                icon_url="https://media.discordapp.net/attachments/1059923774666985602/1064277177786445936/poire_triste.png?width=671&height=671",
+            )
+            embed.set_footer(text=f"{self.bot.user.name} - Erreur")
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+
+
+async def setup(bot):
+    await bot.add_cog(errors(bot))
